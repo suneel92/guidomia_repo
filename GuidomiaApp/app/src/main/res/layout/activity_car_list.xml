@@ -37,6 +37,58 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <LinearLayout
+                    android:id="@+id/lay_filter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/large_space"
+                    android:background="@drawable/sh_background"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/mid_normal_space"
+                    android:paddingTop="@dimen/corner_space"
+                    android:paddingEnd="@dimen/mid_normal_space"
+                    android:paddingBottom="@dimen/mid_normal_space"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_car">
+
+                    <TextView
+                        style="@style/TextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/filters"
+                        android:textColor="@color/color_white"
+                        android:textStyle="normal" />
+
+                    <AutoCompleteTextView
+                        style="@style/FilterText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:auto_adapter="@{viewModel.carMakeList}"
+                        android:item_selection="@{viewModel.makeItem}"
+                        android:hint="@string/any_make" />
+
+                    <AutoCompleteTextView
+                        style="@style/FilterText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:auto_adapter="@{viewModel.carModelList}"
+                        android:item_selection="@{viewModel.modelItem}"
+                        android:hint="@string/any_model" />
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/TextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/normal_space"
+                    android:text="@string/get_your_s_now"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/sp_mid_small"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_name"
+                    tools:ignore="RtlSymmetry" />
+
                 <TextView
                     android:id="@+id/tv_name"
                     style="@style/TextStyle"
@@ -50,20 +102,11 @@
                     app:layout_constraintBottom_toBottomOf="@+id/img_car"
                     tools:ignore="RtlSymmetry" />
 
-                <TextView
-                    style="@style/TextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/normal_space"
-                    android:text="@string/get_your_s_now"
-                    android:textColor="@color/color_white"
-                    android:textSize="@dimen/sp_mid_small"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_name"
-                    tools:ignore="RtlSymmetry" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/mid_normal_space"
                     android:divider="@{true}"
                     android:overScrollMode="never"
                     android:padding="@dimen/normal_space"
@@ -71,8 +114,20 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/img_car"
+                    app:layout_constraintTop_toBottomOf="@+id/lay_filter"
                     tools:listitem="@layout/item_car" />
+
+                <TextView
+                    style="@style/FilterText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/list_image_width"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_margin="@dimen/mid_normal_space"
+                    app:layout_constraintTop_toBottomOf="@+id/lay_filter"
+                    android:visibility="@{viewModel.isCarAvailable ? View.GONE : View.VISIBLE}"
+                    android:gravity="center"
+                    android:text="@string/no_car_is_avail" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -80,7 +135,7 @@
     </LinearLayout>
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.view_models.CarListViewModel" />

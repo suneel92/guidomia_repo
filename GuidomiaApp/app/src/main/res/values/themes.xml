@@ -21,6 +21,19 @@
         <item name="android:textColor">@color/color_text</item>
     </style>
 
+    <style name="FilterText" parent="TextStyle">
+        <item name="android:background">@drawable/sh_background_white</item>
+        <item name="android:layout_marginTop">@dimen/mid_normal_space</item>
+        <item name="android:paddingStart">@dimen/normal_space</item>
+        <item name="android:paddingEnd">@dimen/normal_space</item>
+        <item name="android:paddingTop">@dimen/small_space</item>
+        <item name="android:paddingBottom">@dimen/small_space</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/color_black</item>
+        <item name="android:editable">false</item>
+        <item name="android:focusable">false</item>
+    </style>
+
     <style name="ToolBarStyle">
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>

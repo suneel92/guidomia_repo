@@ -9,4 +9,8 @@
     <string name="point">point</string>
     <string name="pros">Pros:</string>
     <string name="cons">Cons:</string>
+    <string name="filters">Filters</string>
+    <string name="any_make">Any make</string>
+    <string name="any_model">Any model</string>
+    <string name="no_car_is_avail">No car is available as per respective filter</string>
 </resources>

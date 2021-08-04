@@ -3,9 +3,13 @@ package com.utils
 import android.annotation.SuppressLint
 import android.graphics.Canvas
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.R
@@ -49,3 +53,24 @@ fun setPriceString(view: TextView, price: Int) {
         view.context.getString(R.string.price) + (price / 1000) + view.context.getString(R.string.k)
 }
 
+@BindingAdapter("android:auto_adapter")
+fun setAutoAdapter(view: AutoCompleteTextView, datList: List<String>) {
+    view.setAdapter(
+        ArrayAdapter(
+            view.context,
+            android.R.layout.simple_dropdown_item_1line,
+            datList
+        )
+    )
+    view.setOnClickListener {
+        view.showDropDown()
+    }
+}
+
+// Set an item click listener for auto complete text view
+@BindingAdapter("android:item_selection")
+fun setItemSelection(view: AutoCompleteTextView, liveData: MutableLiveData<String>) {
+    view.onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->
+        liveData.value = parent.getItemAtPosition(position).toString()
+    }
+}

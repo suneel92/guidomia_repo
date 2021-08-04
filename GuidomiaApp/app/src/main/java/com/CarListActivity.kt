@@ -15,9 +15,23 @@ class CarListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityCarListBinding = ActivityCarListBinding.inflate(layoutInflater)
+        activityCarListBinding.lifecycleOwner = this
         setContentView(activityCarListBinding.root)
         val carListViewModel: CarListViewModel by viewModels()
         activityCarListBinding.viewModel = carListViewModel
+        observeData(carListViewModel)
+    }
+
+    /*
+    * Observed data will be notify here
+    * */
+    private fun observeData(viewModel: CarListViewModel) {
+        viewModel.makeItem.observe(this, {
+            viewModel.onMakeSelection(it)
+        })
+        viewModel.modelItem.observe(this, {
+            viewModel.onModelSelection(it)
+        })
     }
 
     override fun onDestroy() {
