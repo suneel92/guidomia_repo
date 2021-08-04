@@ -1,0 +1,2 @@
+rootProject.name = "GuidomiaApp"
+include ':app'

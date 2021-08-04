@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">GuidomiaApp</string>
+    <string name="guidomia">Guidomia</string>
+    <string name="car_image">Car Image</string>
+    <string name="tacoma_2021">Tacoma 2021</string>
+    <string name="get_your_s_now">Get your\'s now</string>
+    <string name="price">Price:</string>
+    <string name="k">k</string>
+</resources>

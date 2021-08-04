@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_light_gray">
+
+        <ImageView
+            android:id="@+id/img_car"
+            android:layout_width="@dimen/list_image_width"
+            android:layout_height="@dimen/list_image_height"
+            android:layout_margin="@dimen/normal_space"
+            android:contentDescription="@string/car_image"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_tacoma" />
+
+        <RatingBar
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_price"
+            android:layout_toEndOf="@+id/img_car"
+            android:paddingTop="@dimen/small_space"
+            android:progressTint="@color/color_orange"
+            android:rating="@{helper.rating}" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/img_car"
+            android:paddingTop="@dimen/normal_space"
+            android:text="@{helper.make + '\u0020' +helper.model}" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/TextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:layout_toEndOf="@+id/img_car"
+            android:price_string="@{helper.marketPrice}"
+            android:textSize="@dimen/sp_small" />
+
+    </RelativeLayout>
+
+    <data>
+
+        <variable
+            name="helper"
+            type="com.models.CarData" />
+    </data>
+</layout>

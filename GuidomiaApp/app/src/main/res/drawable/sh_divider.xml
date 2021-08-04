@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:bottom="@dimen/normal_space"
+        android:left="@dimen/mid_normal_space"
+        android:right="@dimen/mid_normal_space"
+        android:top="@dimen/normal_space">
+        <shape android:shape="rectangle">
+            <size android:height="@dimen/line_size" />
+            <solid android:color="@color/color_orange" />
+        </shape>
+    </item>
+</layer-list>
