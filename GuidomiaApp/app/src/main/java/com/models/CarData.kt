@@ -8,4 +8,5 @@ data class CarData(
     val model: String,
     val prosList: List<String>,
     val rating: Int,
+    val isExpanded: Boolean
 )

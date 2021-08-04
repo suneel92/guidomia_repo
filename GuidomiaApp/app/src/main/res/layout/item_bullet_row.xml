@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/line_size"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="@dimen/normal_space"
+            android:layout_height="@dimen/normal_space"
+            android:contentDescription="@string/point"
+            android:src="@drawable/sh_circle" />
+
+        <TextView
+            android:id="@+id/tv_row"
+            style="@style/TextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normal_space"
+            android:text="@{content}"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/sp_small" />
+    </LinearLayout>
+
+    <data>
+
+        <variable
+            name="content"
+            type="String" />
+    </data>
+</layout>

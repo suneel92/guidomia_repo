@@ -1,6 +1,7 @@
 package com
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.databinding.ItemCarBinding
@@ -13,6 +14,8 @@ import com.utils.Constant.MERCEDES
 class CarAdapter : RecyclerView.Adapter<CarAdapter.CarInnerViewHolder>() {
 
     private var cars = mutableListOf<CarData>()
+    private var previousExpandedPosition = -1
+    private var mExpandedPosition = 0
 
     /*
     * Set car list to show in the view
@@ -32,6 +35,7 @@ class CarAdapter : RecyclerView.Adapter<CarAdapter.CarInnerViewHolder>() {
 
     override fun onBindViewHolder(holder: CarInnerViewHolder, position: Int) {
         holder.binding.helper = cars[position]
+        holder.setProsCons(cars[position])
         when (cars[position].make) {
             LAND -> holder.setImage(R.drawable.img_range_rover)
             ALPINE -> holder.setImage(R.drawable.img_alpine_roadster)
@@ -53,6 +57,33 @@ class CarAdapter : RecyclerView.Adapter<CarAdapter.CarInnerViewHolder>() {
         * */
         fun setImage(image: Int) {
             binding.imgCar.setImageResource(image)
+        }
+
+        /*
+       * Used to setup inner recycler views
+       * */
+        fun setProsCons(data: CarData) {
+            setCollapseAbility()
+            binding.listPro.adapter = BulletPointAdapter().setPointsList(data.prosList)
+            binding.listCon.adapter = BulletPointAdapter().setPointsList(data.consList)
+        }
+
+
+        /*
+       * Used to setup Collapse and Expand Ability
+       * */
+        private fun setCollapseAbility() {
+            val isExpanded = (adapterPosition == mExpandedPosition)
+            binding.layDetails.visibility = if (isExpanded) View.VISIBLE else View.GONE
+            binding.layDetails.isActivated = isExpanded
+
+            if (isExpanded) previousExpandedPosition = adapterPosition
+
+            binding.layDetails.rootView.setOnClickListener {
+                mExpandedPosition = if (isExpanded) -1 else adapterPosition
+                notifyItemChanged(previousExpandedPosition)
+                notifyItemChanged(adapterPosition)
+            }
         }
     }
 }

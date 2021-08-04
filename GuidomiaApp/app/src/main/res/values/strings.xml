@@ -6,4 +6,7 @@
     <string name="get_your_s_now">Get your\'s now</string>
     <string name="price">Price:</string>
     <string name="k">k</string>
+    <string name="point">point</string>
+    <string name="pros">Pros:</string>
+    <string name="cons">Cons:</string>
 </resources>

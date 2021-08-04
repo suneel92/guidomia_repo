@@ -3,7 +3,6 @@ package com
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.databinding.ActivityCarListBinding
 import com.view_models.CarListViewModel
 
@@ -15,7 +14,8 @@ class CarListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityCarListBinding = DataBindingUtil.setContentView(this, R.layout.activity_car_list)
+        activityCarListBinding = ActivityCarListBinding.inflate(layoutInflater)
+        setContentView(activityCarListBinding.root)
         val carListViewModel: CarListViewModel by viewModels()
         activityCarListBinding.viewModel = carListViewModel
     }
