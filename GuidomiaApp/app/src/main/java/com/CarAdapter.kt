@@ -6,10 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.databinding.ItemCarBinding
 import com.models.CarData
-import com.utils.Constant.ALPINE
-import com.utils.Constant.BMW
-import com.utils.Constant.LAND
-import com.utils.Constant.MERCEDES
 
 class CarAdapter : RecyclerView.Adapter<CarAdapter.CarInnerViewHolder>() {
 
@@ -36,13 +32,6 @@ class CarAdapter : RecyclerView.Adapter<CarAdapter.CarInnerViewHolder>() {
     override fun onBindViewHolder(holder: CarInnerViewHolder, position: Int) {
         holder.binding.helper = cars[position]
         holder.setProsCons(cars[position])
-        when (cars[position].make) {
-            LAND -> holder.setImage(R.drawable.img_range_rover)
-            ALPINE -> holder.setImage(R.drawable.img_alpine_roadster)
-            BMW -> holder.setImage(R.drawable.img_bmw_330i)
-            MERCEDES -> holder.setImage(R.drawable.img_mercedez_benz_glc)
-            else -> holder.setImage(R.drawable.img_tacoma)
-        }
     }
 
     override fun getItemCount(): Int {
@@ -53,13 +42,6 @@ class CarAdapter : RecyclerView.Adapter<CarAdapter.CarInnerViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
 
         /*
-        * Used to setup image resource
-        * */
-        fun setImage(image: Int) {
-            binding.imgCar.setImageResource(image)
-        }
-
-        /*
        * Used to setup inner recycler views
        * */
         fun setProsCons(data: CarData) {
@@ -67,7 +49,6 @@ class CarAdapter : RecyclerView.Adapter<CarAdapter.CarInnerViewHolder>() {
             binding.listPro.adapter = BulletPointAdapter().setPointsList(data.prosList)
             binding.listCon.adapter = BulletPointAdapter().setPointsList(data.consList)
         }
-
 
         /*
        * Used to setup Collapse and Expand Ability

@@ -7,7 +7,7 @@ import java.lang.reflect.Type
 *  Holds all methods related to Gson for converting objects or Json
 * */
 object GsonUtil {
-    private val gson = Gson()
+    val gson = Gson()
 
     /*
     * Method is used to parse Json in to provided model

@@ -3,17 +3,13 @@ package com.utils
 import android.annotation.SuppressLint
 import android.graphics.Canvas
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.R
-
 
 @BindingAdapter("android:divider")
 fun setDivider(view: RecyclerView, isAddDivider: Boolean) {
@@ -65,6 +61,11 @@ fun setAutoAdapter(view: AutoCompleteTextView, datList: List<String>) {
     view.setOnClickListener {
         view.showDropDown()
     }
+}
+
+@BindingAdapter("android:image")
+fun setImage(view: ImageView, image: Int) {
+    view.setImageResource(image)
 }
 
 // Set an item click listener for auto complete text view

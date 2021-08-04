@@ -13,6 +13,7 @@
             android:layout_height="@dimen/list_image_height"
             android:layout_margin="@dimen/normal_space"
             android:contentDescription="@string/car_image"
+            android:image="@{helper.image}"
             android:scaleType="fitXY"
             android:src="@drawable/img_tacoma" />
 
@@ -29,6 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/normal_space"
+                android:visibility="@{helper.prosList.size > 0 ? View.VISIBLE : View.GONE}"
                 android:text="@string/pros" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -42,6 +44,7 @@
                 style="@style/TextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="@{helper.consList.size > 0 ? View.VISIBLE : View.GONE}"
                 android:layout_marginTop="@dimen/normal_space"
                 android:text="@string/cons" />
 
@@ -49,8 +52,8 @@
                 android:id="@+id/list_con"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/normal_space"
                 android:layout_marginStart="@dimen/normal_space"
+                android:layout_marginBottom="@dimen/normal_space"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </LinearLayout>
@@ -86,7 +89,7 @@
     </RelativeLayout>
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="helper"
             type="com.models.CarData" />

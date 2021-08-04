@@ -3,12 +3,16 @@ package com.view_models
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.CarAdapter
+import com.R
+import com.db.DatabaseBuilder
 import com.google.gson.reflect.TypeToken
 import com.models.CarData
 import com.utils.Constant
 import com.utils.FileUtil
 import com.utils.GsonUtil.getObjectFromJson
+import kotlinx.coroutines.launch
 
 /*
 * Holds the complete business logic related to car list and details
@@ -18,21 +22,26 @@ class CarListViewModel(application: Application) : AndroidViewModel(application)
     private var carList: List<CarData> = mutableListOf()
     var carMakeList: MutableList<String> = mutableListOf()
     var carModelList: MutableList<String> = mutableListOf()
-    val isCarAvailable: MutableLiveData<Boolean> = MutableLiveData(true)
-    val makeItem: MutableLiveData<String> = MutableLiveData()
-    val modelItem: MutableLiveData<String> = MutableLiveData()
+    val isCarAvailable = MutableLiveData(true)
+    val makeItem = MutableLiveData<String>()
+    val modelItem = MutableLiveData<String>()
     private var selectedLastMake: String = ""
     private var selectedLastModel: String = ""
+    private val db = DatabaseBuilder.getInstance(application)
 
     init {
-        /*
-        * Load data from Json
-        * */
-        FileUtil.getJsonDataFromAsset(getApplication(), Constant.FILE_NAME)?.run {
-            carList = getObjectFromJson(
-                this,
-                object : TypeToken<List<CarData>>() {}.type
-            )
+        viewModelScope.launch {
+            carList = db.carDao().getCars()
+            if (carList.isEmpty()) {
+                FileUtil.getJsonDataFromAsset(getApplication(), Constant.FILE_NAME)?.run {
+                    carList = getObjectFromJson(
+                        this,
+                        object : TypeToken<List<CarData>>() {}.type
+                    )
+                    modifyList()
+                    db.carDao().insertCars(carList)
+                }
+            }
             setDataInCategoryList()
             carAdapter.setCarList(carList)
         }
@@ -91,5 +100,22 @@ class CarListViewModel(application: Application) : AndroidViewModel(application)
      * */
     private fun validateEmptyListMessage(listSize: Int) {
         isCarAvailable.postValue(listSize > 0)
+    }
+
+    /*
+    * Modify the list validate images and remove empty fields
+    * */
+    private fun modifyList() {
+        for (car in carList) {
+            car.prosList.removeAll { it.isBlank() }
+            car.consList.removeAll { it.isBlank() }
+            when (car.make) {
+                Constant.LAND -> car.image = R.drawable.img_range_rover
+                Constant.ALPINE -> car.image = R.drawable.img_alpine_roadster
+                Constant.BMW -> car.image = R.drawable.img_bmw_330i
+                Constant.MERCEDES -> car.image = R.drawable.img_mercedez_benz_glc
+                else -> car.image = R.drawable.img_tacoma
+            }
+        }
     }
 }
