@@ -8,6 +8,7 @@ object DatabaseBuilder {
     private var INSTANCE: AppDatabase? = null
 
     /*
+    * @param context Context
     * Used to get DB instance
     * */
     fun getInstance(context: Context): AppDatabase {
@@ -20,6 +21,7 @@ object DatabaseBuilder {
     }
 
     /*
+    * @param context Context
     * Build database
     * */
     private fun buildRoomDB(context: Context) =

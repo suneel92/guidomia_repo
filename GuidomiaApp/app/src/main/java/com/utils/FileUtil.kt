@@ -6,7 +6,9 @@ import java.io.IOException
 object FileUtil {
 
     /*
-    * Method is used to return file's json in to String format
+    * @param context Application level context will also work
+    * @param fileName Assets file name
+    * Method is used to return file's json into String format
     * */
     fun getJsonDataFromAsset(context: Context, fileName: String): String? {
         val jsonString: String

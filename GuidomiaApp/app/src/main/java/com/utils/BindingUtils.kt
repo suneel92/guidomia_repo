@@ -11,6 +11,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.R
 
+/*
+* @param view RecyclerView
+* @param isAddDivider allows to add divider
+* Set divider between RecyclerView items
+*/
 @BindingAdapter("android:divider")
 fun setDivider(view: RecyclerView, isAddDivider: Boolean) {
     if (isAddDivider) {
@@ -42,6 +47,11 @@ fun setDivider(view: RecyclerView, isAddDivider: Boolean) {
     }
 }
 
+/*
+* @param view TextView
+* @param price Price with the multiplication of 1000
+* Set price string into TextView
+*/
 @SuppressLint("SetTextI18n")
 @BindingAdapter("android:price_string")
 fun setPriceString(view: TextView, price: Int) {
@@ -49,6 +59,11 @@ fun setPriceString(view: TextView, price: Int) {
         view.context.getString(R.string.price) + (price / 1000) + view.context.getString(R.string.k)
 }
 
+/*
+* @param view AutoCompleteTextView
+* @param datList List to set in the view's adapter
+* Set adapter into AutoCompleteTextView
+*/
 @BindingAdapter("android:auto_adapter")
 fun setAutoAdapter(view: AutoCompleteTextView, datList: List<String>) {
     view.setAdapter(
@@ -63,12 +78,21 @@ fun setAutoAdapter(view: AutoCompleteTextView, datList: List<String>) {
     }
 }
 
+/*
+* @param view ImageView
+* @param image Image resource id
+* Set Image Resource into ImageView
+*/
 @BindingAdapter("android:image")
 fun setImage(view: ImageView, image: Int) {
     view.setImageResource(image)
 }
 
-// Set an item click listener for auto complete text view
+/*
+* @param view AutoCompleteTextView
+* @param liveData MutableLive data to set the value of selected item
+* Set an item click listener for auto complete TextView
+*/
 @BindingAdapter("android:item_selection")
 fun setItemSelection(view: AutoCompleteTextView, liveData: MutableLiveData<String>) {
     view.onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->

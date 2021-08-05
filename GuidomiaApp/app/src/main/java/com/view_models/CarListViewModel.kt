@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.CarAdapter
 import com.R
-import com.db.DatabaseBuilder
+import com.adapter.CarAdapter
+import com.db.RoomRepository
 import com.google.gson.reflect.TypeToken
 import com.models.CarData
 import com.utils.Constant
@@ -27,19 +27,21 @@ class CarListViewModel(application: Application) : AndroidViewModel(application)
     val modelItem = MutableLiveData<String>()
     private var selectedLastMake: String = ""
     private var selectedLastModel: String = ""
-    private val db = DatabaseBuilder.getInstance(application)
 
     init {
         viewModelScope.launch {
-            carList = db.carDao().getCars()
+            carList = RoomRepository.get(application)
             if (carList.isEmpty()) {
                 FileUtil.getJsonDataFromAsset(getApplication(), Constant.FILE_NAME)?.run {
-                    carList = getObjectFromJson(
+                    val list: List<CarData>? = getObjectFromJson(
                         this,
                         object : TypeToken<List<CarData>>() {}.type
                     )
-                    modifyList()
-                    db.carDao().insertCars(carList)
+                    list?.let {
+                        carList = it
+                        modifyList()
+                        RoomRepository.insert(application, carList)
+                    }
                 }
             }
             setDataInCategoryList()
@@ -51,27 +53,28 @@ class CarListViewModel(application: Application) : AndroidViewModel(application)
     * Used to set name of make and model in the respective list
     * */
     private fun setDataInCategoryList() {
-        for (car in carList) {
-            if (!carMakeList.contains(car.make)) {
-                carMakeList.add(car.make)
+        carList.forEach {
+            if (!carMakeList.contains(it.make)) {
+                carMakeList.add(it.make)
             }
-            if (!carModelList.contains(car.model)) {
-                carModelList.add(car.model)
+            if (!carModelList.contains(it.model)) {
+                carModelList.add(it.model)
             }
         }
     }
 
     /*
+    * @param make Car's make
     * Used to filter the list as per selected make
     * */
     fun onMakeSelection(make: String) {
         val makeCarList: MutableList<CarData> = mutableListOf()
         selectedLastMake = make
-        for (car in carList) {
-            if (make == car.make && (selectedLastModel.isEmpty()
-                        || (selectedLastModel.isNotEmpty() && selectedLastModel == car.model))
+        carList.forEach {
+            if (make == it.make && (selectedLastModel.isEmpty()
+                        || (selectedLastModel.isNotEmpty() && selectedLastModel == it.model))
             ) {
-                makeCarList.add(car)
+                makeCarList.add(it)
             }
         }
         carAdapter.setCarList(makeCarList)
@@ -79,16 +82,17 @@ class CarListViewModel(application: Application) : AndroidViewModel(application)
     }
 
     /*
+   * @param model Car's model
    * Used to filter the list as per selected model
    * */
     fun onModelSelection(model: String) {
         val modelCarList: MutableList<CarData> = mutableListOf()
         selectedLastModel = model
-        for (car in carList) {
-            if (model == car.model && (selectedLastMake.isEmpty()
-                        || (selectedLastMake.isNotEmpty() && selectedLastMake == car.make))
+        carList.forEach {
+            if (model == it.model && (selectedLastMake.isEmpty()
+                        || (selectedLastMake.isNotEmpty() && selectedLastMake == it.make))
             ) {
-                modelCarList.add(car)
+                modelCarList.add(it)
             }
         }
         carAdapter.setCarList(modelCarList)
@@ -96,25 +100,24 @@ class CarListViewModel(application: Application) : AndroidViewModel(application)
     }
 
     /*
+     * @param listSize size of list
      * Validate that empty list message should be show or not
      * */
-    private fun validateEmptyListMessage(listSize: Int) {
-        isCarAvailable.postValue(listSize > 0)
-    }
+    private fun validateEmptyListMessage(listSize: Int) = isCarAvailable.postValue(listSize > 0)
 
     /*
-    * Modify the list validate images and remove empty fields
+    * Modify the list to validate images and remove empty fields from pros and cons
     * */
     private fun modifyList() {
-        for (car in carList) {
-            car.prosList.removeAll { it.isBlank() }
-            car.consList.removeAll { it.isBlank() }
-            when (car.make) {
-                Constant.LAND -> car.image = R.drawable.img_range_rover
-                Constant.ALPINE -> car.image = R.drawable.img_alpine_roadster
-                Constant.BMW -> car.image = R.drawable.img_bmw_330i
-                Constant.MERCEDES -> car.image = R.drawable.img_mercedez_benz_glc
-                else -> car.image = R.drawable.img_tacoma
+        carList.forEach { carData ->
+            carData.prosList.removeAll { it.isBlank() }
+            carData.consList.removeAll { it.isBlank() }
+            when (carData.make) {
+                Constant.LAND -> carData.image = R.drawable.img_range_rover
+                Constant.ALPINE -> carData.image = R.drawable.img_alpine_roadster
+                Constant.BMW -> carData.image = R.drawable.img_bmw_330i
+                Constant.MERCEDES -> carData.image = R.drawable.img_mercedez_benz_glc
+                else -> carData.image = R.drawable.img_tacoma
             }
         }
     }

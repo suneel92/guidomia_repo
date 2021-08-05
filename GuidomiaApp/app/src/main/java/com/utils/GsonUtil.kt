@@ -10,9 +10,15 @@ object GsonUtil {
     val gson = Gson()
 
     /*
-    * Method is used to parse Json in to provided model
+    * @param jsonFileString Json string to convert in the object
+    * @param tokenType type of the desired object
+    * Method is used to parse Json into provided model
     * */
-    fun <T> getObjectFromJson(jsonFileString: String, tokenType: Type): T {
-        return gson.fromJson(jsonFileString, tokenType)
+    fun <T> getObjectFromJson(jsonFileString: String, tokenType: Type): T? {
+        try {
+            return gson.fromJson(jsonFileString.replace("\\", ""), tokenType)
+        } catch (e: Exception) {
+        }
+        return null
     }
 }
