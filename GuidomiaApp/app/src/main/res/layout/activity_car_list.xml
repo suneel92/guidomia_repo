@@ -15,7 +15,16 @@
             android:layout_height="?attr/actionBarSize"
             app:minHeight="?attr/actionBarSize"
             app:title="@string/guidomia"
-            app:titleTextColor="@android:color/white" />
+            app:titleTextColor="@android:color/white">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/mid_normal_space"
+                android:background="@drawable/ic_baseline_menu_24"
+                android:contentDescription="@string/menu_icon" />
+        </androidx.appcompat.widget.Toolbar>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

@@ -13,4 +13,5 @@
     <string name="any_make">Any make</string>
     <string name="any_model">Any model</string>
     <string name="no_car_is_avail">No car is available as per respective filter</string>
+    <string name="menu_icon">Menu Icon</string>
 </resources>

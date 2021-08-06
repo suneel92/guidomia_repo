@@ -70,13 +70,11 @@ class CarListViewModel(application: Application) : AndroidViewModel(application)
     fun onMakeSelection(make: String) {
         val makeCarList: MutableList<CarData> = mutableListOf()
         selectedLastMake = make
-        carList.forEach {
-            if (make == it.make && (selectedLastModel.isEmpty()
-                        || (selectedLastModel.isNotEmpty() && selectedLastModel == it.model))
-            ) {
-                makeCarList.add(it)
-            }
+        val (makeList, _) = carList.partition {
+            (make == it.make && (selectedLastModel.isEmpty()
+                    || (selectedLastModel.isNotEmpty() && selectedLastModel == it.model)))
         }
+        makeCarList.addAll(makeList)
         carAdapter.setCarList(makeCarList)
         validateEmptyListMessage(makeCarList.size)
     }
@@ -88,13 +86,11 @@ class CarListViewModel(application: Application) : AndroidViewModel(application)
     fun onModelSelection(model: String) {
         val modelCarList: MutableList<CarData> = mutableListOf()
         selectedLastModel = model
-        carList.forEach {
-            if (model == it.model && (selectedLastMake.isEmpty()
-                        || (selectedLastMake.isNotEmpty() && selectedLastMake == it.make))
-            ) {
-                modelCarList.add(it)
-            }
+        val (modelList, _) = carList.partition {
+            (model == it.model && (selectedLastMake.isEmpty()
+                    || (selectedLastMake.isNotEmpty() && selectedLastMake == it.make)))
         }
+        modelCarList.addAll(modelList)
         carAdapter.setCarList(modelCarList)
         validateEmptyListMessage(modelCarList.size)
     }
